@@ -3,8 +3,26 @@ set -e
 
 echo "=== Hemora Backend Startup ==="
 
-# Install backend dependencies
-pip install -r requirements.txt
+# Use persistent virtual environment under /home (survives restarts)
+VENV_DIR="/home/site/venv"
+MARKER_FILE="$VENV_DIR/.requirements_installed"
+REQ_HASH=$(md5sum requirements.txt | awk '{print $1}')
+
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating persistent virtual environment..."
+    python -m venv "$VENV_DIR"
+fi
+
+source "$VENV_DIR/bin/activate"
+
+# Only pip install if requirements changed or never installed
+if [ ! -f "$MARKER_FILE" ] || [ "$(cat $MARKER_FILE)" != "$REQ_HASH" ]; then
+    echo "Installing backend dependencies (this takes a while on first run)..."
+    pip install --no-cache-dir -r requirements.txt
+    echo "$REQ_HASH" > "$MARKER_FILE"
+else
+    echo "Dependencies already installed, skipping pip install."
+fi
 
 # Install Tesseract OCR for CBC report extraction
 if ! command -v tesseract &> /dev/null; then
