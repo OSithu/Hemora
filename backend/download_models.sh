@@ -5,7 +5,7 @@
 
 set -e
 
-REPO="Nizith/Hemora"
+REPO="OSithu/Hemora"
 TAG="models-v1"
 BASE_URL="https://github.com/$REPO/releases/download/$TAG"
 MODEL_DIR="$(dirname "$0")/models"
