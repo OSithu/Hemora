@@ -65,5 +65,9 @@ black==24.10.0
 # Environment Management
 python-dotenv==1.0.1
 
+# Production Server
+gunicorn==23.0.0
+whitenoise==6.8.2
+
 # Additional dependencies
 django-filter==24.3

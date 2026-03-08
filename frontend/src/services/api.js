@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// API base URL: accept only absolute http(s) URLs from env, otherwise fallback.
+// API base URL: accept absolute http(s) URLs or relative paths from env, otherwise fallback.
 const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
 const fallbackApiBaseUrl = `http://${window.location.hostname || 'localhost'}:8000/api`;
-const API_BASE_URL = /^https?:\/\//i.test(configuredApiBaseUrl)
+const API_BASE_URL = configuredApiBaseUrl
   ? configuredApiBaseUrl.replace(/\/+$/, '')
   : fallbackApiBaseUrl;
 
