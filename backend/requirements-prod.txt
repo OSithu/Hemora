@@ -1,0 +1,61 @@
+# Production dependencies for Azure App Service (CPU-only, no dev tools)
+
+# Web Framework
+Django==5.2.7
+djangorestframework==3.16.1
+django-cors-headers==4.6.0
+django-environ==0.11.2
+
+# Database
+psycopg2-binary==2.9.10
+
+# Deep Learning - PyTorch CPU-only (~200MB vs ~800MB with CUDA)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0+cpu
+torchvision==0.21.0+cpu
+
+# Image Processing
+opencv-python-headless==4.10.0.84
+scikit-image==0.24.0
+Pillow==11.0.0
+albumentations==1.4.21
+
+# Data Science & ML
+numpy==2.2.1
+pandas==2.2.3
+scikit-learn==1.6.0
+matplotlib==3.10.0
+seaborn==0.13.2
+
+# Deep Learning - TensorFlow (for ALL Leukemia detection)
+tensorflow-cpu>=2.15.0
+
+# YOLO Object Detection
+ultralytics>=8.0.0
+
+# CBC Report Extraction (PDF + OCR)
+pdfplumber>=0.10.0
+PyMuPDF>=1.24.0
+pytesseract>=0.3.10
+
+# Medical Imaging
+pydicom==3.0.1
+
+# API Documentation
+drf-yasg==1.21.8
+
+# File Upload & Storage
+django-storages==1.14.4
+
+# Authentication & Security
+djangorestframework-simplejwt==5.5.1
+
+# Environment Management
+python-dotenv==1.0.1
+
+# Production Server
+gunicorn==23.0.0
+whitenoise==6.8.2
+
+# Additional dependencies
+django-filter==24.3

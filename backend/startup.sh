@@ -6,7 +6,9 @@ echo "=== Hemora Backend Startup ==="
 # Use persistent virtual environment under /home (survives restarts)
 VENV_DIR="/home/site/venv"
 MARKER_FILE="$VENV_DIR/.requirements_installed"
-REQ_HASH=$(md5sum requirements.txt | awk '{print $1}')
+REQ_FILE="requirements-prod.txt"
+[ ! -f "$REQ_FILE" ] && REQ_FILE="requirements.txt"
+REQ_HASH=$(md5sum "$REQ_FILE" | awk '{print $1}')
 
 if [ ! -d "$VENV_DIR" ]; then
     echo "Creating persistent virtual environment..."
@@ -18,7 +20,7 @@ source "$VENV_DIR/bin/activate"
 # Only pip install if requirements changed or never installed
 if [ ! -f "$MARKER_FILE" ] || [ "$(cat $MARKER_FILE)" != "$REQ_HASH" ]; then
     echo "Installing backend dependencies (this takes a while on first run)..."
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r "$REQ_FILE"
     echo "$REQ_HASH" > "$MARKER_FILE"
 else
     echo "Dependencies already installed, skipping pip install."
