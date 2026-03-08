@@ -10,12 +10,13 @@ REQ_FILE="requirements-prod.txt"
 [ ! -f "$REQ_FILE" ] && REQ_FILE="requirements.txt"
 REQ_HASH=$(md5sum "$REQ_FILE" | awk '{print $1}')
 
-if [ ! -d "$VENV_DIR" ]; then
+if [ ! -f "$VENV_DIR/bin/activate" ]; then
     echo "Creating persistent virtual environment..."
-    python -m venv "$VENV_DIR"
+    rm -rf "$VENV_DIR"
+    python3 -m venv "$VENV_DIR"
 fi
 
-source "$VENV_DIR/bin/activate"
+. "$VENV_DIR/bin/activate"
 
 # Only pip install if requirements changed or never installed
 if [ ! -f "$MARKER_FILE" ] || [ "$(cat $MARKER_FILE)" != "$REQ_HASH" ]; then
